@@ -2,11 +2,12 @@ import pygame
 
 pygame.init()
 
-size = (700, 400)
+size = (1000, 650)
 
 white = (255,255,255)
 
 screen = pygame.display.set_mode(size)
+pygame.display.set_caption('Space Dodger')
 
 done = False
 
