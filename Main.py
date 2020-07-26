@@ -1,7 +1,5 @@
-# Put player into class
-# Improve stuttering
-
 import pygame
+import Player
 
 pygame.init()
 
@@ -17,14 +15,7 @@ done = False
 clock = pygame.time.Clock()
 
 # <a href="https://www.freevector.com/space-rocket-vector--26316">FreeVector.com</a>
-playerImage = pygame.image.load('rocket.JPG')
-playerX = 480
-playerY = 582
-playerChangeX = 0
-playerChangeY = 0
-
-def drawPlayer(x, y):
-    screen.blit(playerImage, (x, y))
+player = Player.Player(pygame.image.load('rocket.JPG'), 480, 582)
     
 while not done:
 
@@ -34,26 +25,26 @@ while not done:
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                playerChangeX -= 5
+                player.changeX -= 5
             if event.key == pygame.K_RIGHT:
-                playerChangeX += 5
+                player.changeX += 5
             if event.key == pygame.K_UP:
-                playerChangeY -= 5
+                player.changeY -= 5
             if event.key == pygame.K_DOWN:
-                playerChangeY += 5
+                player.changeY += 5
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                playerChangeX = 0
+                player.changeX = 0
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                playerChangeY = 0
+                player.changeY = 0
 
-    playerX += playerChangeX
-    playerY += playerChangeY
+    player.x += player.changeX
+    player.y += player.changeY
 
     screen.fill(white)
 
-    drawPlayer(playerX, playerY)
+    player.draw(screen)
 
     pygame.display.update()
     clock.tick(60)
