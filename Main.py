@@ -1,11 +1,13 @@
 import pygame
 import Player
+import Planet
 
 pygame.init()
 
 size = (1000, 650)
 
 white = (255,255,255)
+black = (0,0,0)
 
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption('Space Dodger')
@@ -16,6 +18,7 @@ clock = pygame.time.Clock()
 
 # <a href="https://www.freevector.com/space-rocket-vector--26316">FreeVector.com</a>
 player = Player.Player(pygame.image.load('rocket.JPG'), 480, 582)
+planet = Planet.Planet(pygame.image.load('planet.PNG'), size[0])
     
 while not done:
 
@@ -45,6 +48,15 @@ while not done:
     screen.fill(white)
 
     player.draw(screen)
+    planet.draw(screen)
+
+    # Move to function
+    if player.y < planet.y + planet.height:
+        if player.x > planet.x and player.x < planet.x + planet.width or player.x + player.width > planet.x and player.x + player.width < planet.width:
+           pygame.quit() # Make nice
+
+    if(planet.y > 650): # Change to timed
+        planet = Planet.Planet(pygame.image.load('planet.PNG'), size[0])
 
     pygame.display.update()
     clock.tick(60)
