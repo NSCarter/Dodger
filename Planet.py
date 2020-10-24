@@ -12,3 +12,9 @@ class Planet:
     def draw(self, screen):
         self.y += self.speed
         screen.blit(self.image, (self.x, self.y))
+
+    def getBoxX(self):
+        return (self.x, self.x + self.width)
+
+    def getBoxY(self):
+        return (self.y, self.y + self.height)

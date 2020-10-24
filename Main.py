@@ -19,6 +19,14 @@ clock = pygame.time.Clock()
 # <a href="https://www.freevector.com/space-rocket-vector--26316">FreeVector.com</a>
 player = Player.Player(pygame.image.load('rocket.JPG'), 480, 582)
 planet = Planet.Planet(pygame.image.load('planet.PNG'), size[0])
+
+def isOverlapping1D(box1, box2):
+    return box1[1] >= box2[0] and box2[1] >= box1[0]
+
+def checkOverlap():
+    if (isOverlapping1D(player.getBoxX(), planet.getBoxX()) and isOverlapping1D(player.getBoxY(), planet.getBoxY())):
+        return True
+    return False
     
 while not done:
 
@@ -50,10 +58,8 @@ while not done:
     player.draw(screen)
     planet.draw(screen)
 
-    # Move to function
-    if player.y < planet.y + planet.height:
-        if player.x > planet.x and player.x < planet.x + planet.width or player.x + player.width > planet.x and player.x + player.width < planet.width:
-           pygame.quit() # Make nice
+    if (checkOverlap()):
+        done = True
 
     if(planet.y > 650): # Change to timed
         planet = Planet.Planet(pygame.image.load('planet.PNG'), size[0])
