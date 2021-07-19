@@ -16,13 +16,16 @@ done = False
 
 clock = pygame.time.Clock()
 
+score = 0
+planetTimer = 4000
+
 # <a href="https://www.freevector.com/space-rocket-vector--26316">FreeVector.com</a>
 player = Player.Player(pygame.image.load('rocket.JPG'), 480, 582)
 planets = [Planet.Planet(pygame.image.load('planet.PNG'), size[0])]
 
 NEWPLANETEVENT = pygame.USEREVENT + 1
 
-pygame.time.set_timer(NEWPLANETEVENT, 4000)
+pygame.time.set_timer(NEWPLANETEVENT, planetTimer)
 
 def isOverlapping1D(box1, box2):
     return box1[1] >= box2[0] and box2[1] >= box1[0]
@@ -32,6 +35,11 @@ def checkOverlap():
         if (isOverlapping1D(player.getBoxX(), planet.getBoxX()) and isOverlapping1D(player.getBoxY(), planet.getBoxY())):
             return True
     return False
+
+def displayScore():
+    font = pygame.font.SysFont(None, 25)
+    text = font.render('Score: ' + str(score), True, black)
+    screen.blit(text, (0,0))
     
 while not done:
 
@@ -64,11 +72,20 @@ while not done:
     screen.fill(white)
 
     player.draw(screen)
+    
     for planet in planets:
         planet.draw(screen)
 
     if (checkOverlap()):
         done = True
+
+    for planet in planets:
+        if planet.y > 650:
+            planets.remove(planet)
+            planetTimer -= 1
+            score += 1
+
+    displayScore()
         
     pygame.display.update()
     clock.tick(60)
